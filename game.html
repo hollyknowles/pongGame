@@ -4,13 +4,40 @@
     <script>
         var canvas;
         var canvasContext;
+        var ballX = 50;
+        var ballSpeedX = 5;
+
         window.onload = function() { 
             console.log("hello world");
             canvas = document.getElementById('gameCanvas');
             canvasContext = canvas.getContext('2d');
-            canvasContext.fillStyle = 'black';
-            canvasContext.fillRect(0,0, canvas.width, canvas.height);
+
+            var framesPerSecond = 30;
+            setInterval(function(){
+                moveEverything();
+                drawEverything();
+            }, 1000/framesPerSecond);
         }
-        
+
+        function moveEverything(){
+            ballX = ballX + ballSpeedX;
+            if(ballX < 0) {
+                ballSpeedX = -ballSpeedX;
+            }
+            if(ballX > canvas.width) {
+                ballSpeedX = -ballSpeedX;
+            }
+        }
+
+        function drawEverything() {
+            colourRect(0, 0, canvas.width, canvas.height, 'black');
+            colourRect(0, 210, 10, 100, 'white');
+            colourRect(ballX, 100, 10, 10, 'red');
+        }
+
+        function colourRect(leftX, topY, width, height, drawColour){
+            canvasContext.fillStyle = drawColour;
+            canvasContext.fillRect(leftX, topY, width, height);
+        }
     </script>
 </html>
